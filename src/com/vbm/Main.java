@@ -14,16 +14,20 @@ public class Main {
         islands[6] = new int[]{0, 0, 0, 1, 0, 2, 1};
 
         System.out.println("Source graph array: ");
+        System.out.println();
 
         arrayprint(islands);
+
+        System.out.println();
+        System.out.println();
 
         arrayprint(mapper(islands));
     }
 
-    public static void boardprint(int length, boolean numbers) {
+    private static void boardprint(int length, boolean numbers) {
         if (numbers) {
             for (int i = 0; i < length; ++i)
-                System.out.print("  " + String.valueOf(i+1) + " ");
+                System.out.print("  " + String.valueOf(i + 1) + " ");
             System.out.println();
         }
         for (int i = 0; i < length; ++i)
@@ -32,8 +36,7 @@ public class Main {
         System.out.println();
     }
 
-    public static void arrayprint( int [][] islands )
-    {
+    private static void arrayprint(int[][] islands) {
         boardprint(islands.length, true);
         for (int i = 0; i < islands.length; ++i) {
             System.out.print("| ");
@@ -45,21 +48,31 @@ public class Main {
 
     }
 
-    public static int[][] mapper( int[][] graph ){
-        int [][] myMap = graph;
-           for( int i = 0 ; i < myMap.length ; ++ i ){
-               for( int j = 0 ; j < myMap.length ; ++ j ){
-                   if( i == j ) continue;
-                   if( myMap[i][j] != 0 ){
-                       for( int k = 0 ; k < myMap.length ; k++ ){
-                           if( k == i || k == j ) continue;
-                           if( myMap[j][k] == 0 ) continue;
-                           myMap[i][k] = ( myMap[i][k] > ( myMap[i][j] + myMap[j][k] ) ) || myMap[i][k] == 0 ? myMap[i][j] + myMap[j][k] : myMap[i][k];
-                           myMap[k][i] = myMap[i][k];
-                       }
-                   }
-               }
-           }
+    private static int[][] mapper(int[][] graph) {
+
+        int[][] myMap = new int[graph.length][];
+
+        // Клонируем массив чтобы не перезаписывать исходный
+        for (int i = 0; i < graph.length; i++)
+            myMap[i] = graph[i].clone();
+
+        for (int i = 0; i < myMap.length; ++i) {
+            for (int j = 0; j < myMap.length; ++j) {
+
+                if (i == j || myMap[i][j] == 0) continue;
+
+                for (int k = 0; k < myMap.length; k++) {
+                    if (k == i || k == j) continue;
+                    if (myMap[j][k] == 0) continue;
+                    myMap[i][k] = (myMap[i][k] > (myMap[i][j] + myMap[j][k])) || myMap[i][k] == 0 ? myMap[i][j] + myMap[j][k] : myMap[i][k];
+                    myMap[k][i] = myMap[i][k];
+                }
+            }
+
+           /* System.out.println();
+            arrayprint(myMap);
+            System.out.println();*/
+        }
         return myMap;
     }
 
