@@ -3,8 +3,9 @@ package com.vbm;
 public class Main {
 
     public static void main(String[] args) {
-        // write your code here
+
         int[][] islands = new int[7][];
+
         islands[0] = new int[]{1, 1, 0, 0, 0, 0, 0};
         islands[1] = new int[]{1, 1, 3, 0, 2, 0, 0};
         islands[2] = new int[]{0, 3, 1, 6, 0, 1, 0};
